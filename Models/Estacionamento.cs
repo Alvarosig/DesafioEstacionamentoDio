@@ -52,8 +52,10 @@ namespace DesafioEstacionamento.Models
         {
             Console.WriteLine("Digite o preço inicial");
             precoInicial = Convert.ToDecimal(Console.ReadLine());
+
             Console.WriteLine("Agora digite o preco por hora");
             precoHora = Convert.ToDecimal(Console.ReadLine());
+
             return precoInicial + precoHora;
         }
 
@@ -61,7 +63,15 @@ namespace DesafioEstacionamento.Models
         {
             Console.WriteLine("Digite a placa do veículo para estacionar:");
             string placa = Console.ReadLine();
-            Veiculo.Add(placa.ToUpper());
+
+            if (placa.Length > 7)
+            {
+                Console.WriteLine("A placa deve ter no máximo 7 dígitos");
+            }
+            else
+            {
+                Veiculo.Add(placa.ToUpper());
+            }
         }
 
         public void ListarVeiculos()
@@ -77,17 +87,24 @@ namespace DesafioEstacionamento.Models
 
         public void RemoverVeiculo()
         {
-            Console.WriteLine("Digite a placa do veículo para remover:");
-            string placa = Console.ReadLine().ToUpper();
-
-            if (Veiculo.Contains(placa))
+            if (Veiculo.Count == 0)
             {
-                Veiculo.Remove(placa);
-                CalcularHorario(placa);
+                Console.WriteLine("Nenhum veículo no estacionamento cadastrado");
             }
             else
             {
-                Console.WriteLine("Veículo não encontrado");
+                Console.WriteLine("Digite a placa do veículo para remover:");
+                string placa = Console.ReadLine().ToUpper();
+
+                if (Veiculo.Contains(placa))
+                {
+                    Veiculo.Remove(placa);
+                    CalcularHorario(placa);
+                }
+                else
+                {
+                    Console.WriteLine("Veículo não encontrado");
+                }
             }
         }
 
